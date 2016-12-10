@@ -1,18 +1,42 @@
 # -*- coding: utf-8 -*-
 from collections import OrderedDict
-
+from tabulate import tabulate
 import Levenshtein as lv
 import paths
-
 from pyomo.langlib import normal_form_file as file_lib
-
 from difflib import SequenceMatcher
 
+class Accumulator(list):
+    def __init__(self, limit):
+        super().__init__()
+        self.limit = limit
+
+    def extend_(self, iterable):
+        super().extend(iterable)
+        temp = self.copy()
+        self.clear()
+        self.extend(temp[:self.limit])
+        return temp[self.limit:]
+
+class MyDict(OrderedDict):
+    def __init__(self, *args, **kwds):
+        super().__init__(*args, **kwds)
+
+    def __len__(self):
+        s = 0
+        for x in self.values():
+            s += len(x)
+        return s
+
+
+
+
 def pprint(seq):
-    for i in seq:
-        print(i)
+    for k, v in seq.items():
+        print(round(k, 3), v, sep=' = \n')
         print('-------------------')
     print(len(seq))
+
 
 def func4(lst, word, r):
     result = []
@@ -34,37 +58,46 @@ diff_functions = dict(
 def diff(fun, lst, word, ratio, *prefix):
     result = set()
     for line in lst:
-        if fun(line, word, *prefix) > ratio:
+        r = fun(line, word, *prefix)
+        if r > ratio:
+            if line == 'апликация':
+                print(r, 'апликация')
             result.add(line)
     return result
 
-
-
-
-if __name__ == '__main__':
-    w = 'аплик'
-    w2 = 'тебл***'
-    lst = file_lib.file_to_words(paths.dict_work('result.txt'))
-
-    # print(diff(diff_functions['ratio'],lst, w, 0.75))
-
+def main():
+    empty = 0
+    word = 'еплик'
+    lst = file_lib.file_to_words(paths.dict_work('result_not_dubble.txt'))
     ratio = 0.85
-    ratio_step = 0.01
-    dct = OrderedDict()
+    ratio_step = 0.02
+    limit = 50
+    dct = MyDict()
     ak = set()
-    for _ in range(100):
-        res = diff(diff_functions['jaro_winkler'],lst, w, ratio, 0.1)
+    for _ in range(40):
+        res = diff(diff_functions['jaro_winkler'], lst, word, ratio, 0.1)
         if res:
             if ak:
                 res = res - ak
             ak.update(res)
             if res:
-                dct[ratio] = sorted(list(res))
-            ratio -= ratio_step
-            if len(res) > 100:
+                dct[round(ratio, 3)] = sorted(list(res))
+
+
+            if len(res) > limit:
                 break
-    pprint(dct.values())
-    # print(func2(lst, w, 3))
-    # print('------------------')
-    # print(func3(lst, w, 0.64))
-    # # print(func(lst, w2, 4))
+            ratio -= ratio_step
+        else:
+            ratio -= ratio_step
+            empty += 1
+            continue
+
+    print(tabulate(dct, headers='keys'))
+    print(len(dct))
+
+
+
+if __name__ == '__main__':
+    main()
+
+

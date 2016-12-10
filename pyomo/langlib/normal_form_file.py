@@ -81,6 +81,10 @@ def uniq_files(path_list):
         res.add(line.strip())
     return sorted(list(res))
 
+def sub_dubble_letter(words):
+    p = re.compile(r'(\w)\1+')
+    return [re.sub(p, '\g<1>', w) for w in words]
+
 def main():
     source = file_to_words(paths.dict_source('Про-Линг_sort.txt'))
     target_path = paths.dict_work('Про-Линг.txt')
@@ -91,18 +95,24 @@ def main():
 
     words_to_file(target_path, uniq)
 
-
+def sub_dubble_letter_words():
+    path = paths.dict_work('result.txt')
+    target_path = paths.dict_work('result_not_dubble.txt')
+    source_list = file_to_words(path)
+    sub_list = sub_dubble_letter(source_list)
+    words_to_file(target_path, sub_list)
 
 
 
 
 
 if __name__ == '__main__':
-    file_1 = paths.dict_work('Про-Линг.txt')
-    file_2 = paths.dict_work('zdf-win.txt')
-    target = paths.dict_work('result.txt')
-    uniq = uniq_files([file_1, file_2])
-    words_to_file(target, uniq)
+    sub_dubble_letter_words()
+    # file_1 = paths.dict_work('Про-Линг.txt')
+    # file_2 = paths.dict_work('zdf-win.txt')
+    # target = paths.dict_work('result.txt')
+    # uniq = uniq_files([file_1, file_2])
+    # words_to_file(target, uniq)
     # source = file_to_words(paths.dict_source('Про-Линг.txt'))
     # words_to_file(paths.dict_source('Про-Линг_sort.txt'), sorted(source))
     # main()
