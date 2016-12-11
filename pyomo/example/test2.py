@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*
 
+from collections import OrderedDict
 
-a = 1
-b = a
+d = OrderedDict(
+    a=[1, 2],
+    b=[3, 4],
+    c=[5, 6])
 
-a = 2
+od = OrderedDict(d)
+print(od)
 
-print(b)

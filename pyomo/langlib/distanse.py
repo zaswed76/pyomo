@@ -4,7 +4,7 @@ from tabulate import tabulate
 import Levenshtein as lv
 import paths
 from pyomo.langlib import normal_form_file as file_lib
-from difflib import SequenceMatcher
+
 
 class Accumulator(list):
     def __init__(self, limit):
@@ -37,13 +37,6 @@ def pprint(seq):
         print('-------------------')
     print(len(seq))
 
-
-def func4(lst, word, r):
-    result = []
-    for line in lst:
-        if SequenceMatcher(None, line, word).ratio() > r:
-            result.append(line)
-    return result
 
 
 diff_functions = dict(

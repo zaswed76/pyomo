@@ -17,6 +17,8 @@ except IndexError:
     pass
     # print('нет аргументов')
 
+
+
 def file_to_words(file):
     """
     получить список слов из файла
