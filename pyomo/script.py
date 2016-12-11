@@ -9,17 +9,13 @@ from pyomo.langlib import dict_lib
 
 cfg = config.Config()
 
-def get_dictionaries():
-    dictionaries = {}
-    for name, dct in cfg.dictionaries.items():
-        dictionaries[name] = file_lib.file_to_words(paths.dict_work(cfg.dictionaries[dct]))
-    return dictionaries
+
 
 
 
 def main():
-    dictionaries = get_dictionaries()
-    print(dictionaries)
+    dictionaries = file_lib.Dictionaries(cfg)
+    print(dictionaries())
     # work_words = dict_lib.Dictionaries()
 
 

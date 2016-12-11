@@ -6,7 +6,7 @@ class Config:
             noun='no_duplicate_letters.txt',
             verb='',
             adj='',
-            names='name.txt',
+            names='',
             other='',
         )
         self.noun_dict = True

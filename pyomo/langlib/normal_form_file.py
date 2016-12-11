@@ -16,7 +16,43 @@ try:
 except IndexError:
     pass
     # print('нет аргументов')
+class Dictionaries:
+    Noun = 'noun'
+    Verb = 'verb'
+    Adj = 'adj'
+    Names = 'names'
+    Other = 'other'
+    def __init__(self, cfg):
+        """
+        :param cfg:
+        """
+        self.cfg = cfg
+        self.seq = [self.Noun, self.Adj, self.Verb, self.Names, self.Other]
+        self.dictionaries = self.get_dictionaries()
 
+    def get_dictionaries(self):
+        dictionaries = {}
+        for name, dct in self.cfg.dictionaries.items():
+            try:
+                d_name = self.cfg.dictionaries[name]
+            except KeyError:
+                pass
+            else:
+                if d_name:
+                    dictionaries[name] = file_to_words(paths.dict_work(d_name))
+        return dictionaries
+
+    def __call__(self, *args):
+        if args:
+            seq = args
+        else:
+            seq = self.seq
+        lst = []
+        for k in seq:
+            try:
+                lst.extend(self.dictionaries[k])
+            except: pass
+        return lst
 
 
 def file_to_words(file):
