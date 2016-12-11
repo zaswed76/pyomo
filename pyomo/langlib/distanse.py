@@ -43,8 +43,7 @@ diff_functions = dict(
     distance=lambda w, line: lv.distance(w, line),
     jaro_winkler=lambda w, line, pr: lv.jaro_winkler(w, line, pr),
     jaro=lambda w, line: lv.jaro_winkler(w, line),
-    ratio=lambda w, line: lv.ratio(w, line),
-    difflib=lambda w, line: SequenceMatcher(None, line, w).ratio()
+    ratio=lambda w, line: lv.ratio(w, line)
 )
 
 
