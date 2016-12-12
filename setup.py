@@ -1,12 +1,12 @@
 from os.path import join, dirname
 
-import program
+import pyomo
 from setuptools import setup, find_packages
 
 setup(
-        name="program",
+        name="pyomo",
         # в __init__ пакета
-        version=program.__version__,
+        version=pyomo.__version__,
         packages=find_packages(
                 exclude=["*.exemple", "*.exemple.*", "exemple.*",
                          "exemple"]),
@@ -16,7 +16,8 @@ setup(
         install_requires=[],
         entry_points={
             'console_scripts':
-                ['program = program.script:main']
+                ['pyomo = pyomo.pyomo:main']
         }
 
 )
+

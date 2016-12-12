@@ -1,0 +1,2 @@
+
+recursive-include pyomo/resource/dictionaries/work *.txt

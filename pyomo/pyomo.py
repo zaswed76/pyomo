@@ -3,13 +3,8 @@
 
 import sys
 import argparse
-import paths
-import config
-from langlib import distanse
-from langlib import normal_form_file as omolib
-from langlib import dict_lib
-from collections import OrderedDict
-from tabulate import tabulate
+from pyomo import config
+from pyomo.langlib import normal_form_file as omolib
 import Levenshtein as lv
 cfg = config.Config()
 
@@ -19,7 +14,7 @@ def printer(iterable ,*args):
 
 def arg_parser(cfg):
     parser = argparse.ArgumentParser(
-        description=''' поиск слов подобных по звучанию ''')
+        description=''' поиск слов подобных по звучанию !!! ''')
 
     parser.add_argument('-r', dest='rating', default=cfg.rating, type=int,
                         help='''

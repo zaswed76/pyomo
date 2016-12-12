@@ -8,7 +8,7 @@
 import re
 import sys
 import fileinput
-import paths
+from pyomo import paths
 
 try:
     arg = sys.argv[1]
