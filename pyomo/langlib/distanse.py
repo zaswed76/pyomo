@@ -3,7 +3,7 @@ from collections import OrderedDict
 from tabulate import tabulate
 import Levenshtein as lv
 import paths
-from pyomo.langlib import normal_form_file as file_lib
+from langlib import normal_form_file as file_lib
 
 
 class Accumulator(list):
