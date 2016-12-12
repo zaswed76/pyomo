@@ -52,8 +52,6 @@ def diff(fun, lst, word, ratio, *prefix):
     for line in lst:
         r = fun(line, word, *prefix)
         if r > ratio:
-            if line == 'апликация':
-                print(r, 'апликация')
             result.add(line)
     return result
 

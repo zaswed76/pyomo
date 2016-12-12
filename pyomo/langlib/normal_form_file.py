@@ -5,7 +5,6 @@
 
 '''
 
-
 import re
 import sys
 import fileinput
@@ -16,18 +15,22 @@ try:
 except IndexError:
     pass
     # print('нет аргументов')
+
+
 class Dictionaries:
     Noun = 'noun'
     Verb = 'verb'
     Adj = 'adj'
     Names = 'names'
     Other = 'other'
+
     def __init__(self, cfg):
         """
         :param cfg:
         """
         self.cfg = cfg
-        self.seq = [self.Noun, self.Adj, self.Verb, self.Names, self.Other]
+        self.seq = [self.Noun, self.Adj, self.Verb, self.Names,
+                    self.Other]
         self.dictionaries = self.get_dictionaries()
 
     def get_dictionaries(self):
@@ -38,8 +41,11 @@ class Dictionaries:
             except KeyError:
                 pass
             else:
-                if d_name:
-                    dictionaries[name] = file_to_words(paths.dict_work(d_name))
+                if d_name and self.cfg.init_dictionaries.get(name,
+                                                             False):
+                    print(name)
+                    dictionaries[name] = file_to_words(
+                        paths.dict_work(d_name))
         return dictionaries
 
     def __call__(self, *args):
@@ -51,8 +57,18 @@ class Dictionaries:
         for k in seq:
             try:
                 lst.extend(self.dictionaries[k])
-            except: pass
+            except:
+                pass
         return lst
+
+
+class Accumulator(list):
+    def __init__(self):
+        super().__init__()
+
+    def append(self, p_object):
+        if not p_object in self:
+            super().append(p_object)
 
 
 def file_to_words(file):
@@ -63,6 +79,7 @@ def file_to_words(file):
     """
     with open(file, "r", encoding="utf-8") as f:
         return [x.strip() for x in f]
+
 
 def words_to_file(file, lst):
     """
@@ -75,8 +92,6 @@ def words_to_file(file, lst):
         f.write('\n'.join(lst))
 
 
-
-
 def len_filter(lst, length: int):
     """
 
@@ -86,6 +101,7 @@ def len_filter(lst, length: int):
     """
     return [x for x in lst if len(x) > length]
 
+
 def unique(lst):
     """
      убирает повторы
@@ -93,6 +109,7 @@ def unique(lst):
     :return: list
     """
     return sorted(list(set(lst)))
+
 
 def normalize_words(lst):
     """
@@ -102,6 +119,7 @@ def normalize_words(lst):
     """
     pattern = re.compile('[\d\W]+\Z|^[\d\W]+')
     return [re.sub(pattern, '', line) for line in lst]
+
 
 def del_word_tire(lst, pat):
     """
@@ -113,15 +131,20 @@ def del_word_tire(lst, pat):
     pattern = re.compile(pat)
     return [x for x in lst if re.search(pattern, x) is None]
 
+
 def uniq_files(path_list):
     res = set()
-    for line in fileinput.FileInput(path_list, openhook=fileinput.hook_encoded("utf-8")):
+    for line in fileinput.FileInput(path_list,
+                                    openhook=fileinput.hook_encoded(
+                                            "utf-8")):
         res.add(line.strip())
     return sorted(list(res))
+
 
 def sub_dubble_letter(words):
     p = re.compile(r'(\w)\1+')
     return [re.sub(p, '\g<1>', w) for w in words]
+
 
 def main():
     source = file_to_words(paths.dict_source('Про-Линг_sort.txt'))
@@ -133,15 +156,13 @@ def main():
 
     words_to_file(target_path, uniq)
 
+
 def sub_dubble_letter_words():
     path = paths.dict_work('result.txt')
     target_path = paths.dict_work('result_not_dubble.txt')
     source_list = file_to_words(path)
     sub_list = sub_dubble_letter(source_list)
     words_to_file(target_path, sub_list)
-
-
-
 
 
 if __name__ == '__main__':

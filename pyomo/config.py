@@ -6,11 +6,13 @@ class Config:
             noun='no_duplicate_letters.txt',
             verb='',
             adj='',
-            names='',
-            other='',
+            names='name.txt',
+            other=''
         )
-        self.noun_dict = True
-        self.verb_dict = True
-        self.adjective_dict = True
-        self.names_dict = True
-        self.other_dict = True
+        self.init_dictionaries = dict(
+            noun=True,
+            verb=False,
+            adj=False,
+            names=True,
+            other=True
+        )
