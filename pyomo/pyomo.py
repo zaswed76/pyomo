@@ -17,15 +17,15 @@ def printer(iterable ,*args):
     pass
 
 
-def arg_parser():
+def arg_parser(cfg):
     parser = argparse.ArgumentParser(
         description=''' поиск слов подобных по звучанию ''')
 
-    parser.add_argument('-r', dest='rating', default=87, type=int,
+    parser.add_argument('-r', dest='rating', default=cfg.rating, type=int,
                         help='''
                         рейтинг - целое число от 0 до 100
                         чем ниже рейтинг тем больше найденых слов''')
-    parser.add_argument('-p', dest='prefix', default=0.1, type=float,
+    parser.add_argument('-p', dest='prefix', default=cfg.prefix, type=float,
                         help='''
                         Compute Jaro string similarity metric of two strings.
 
@@ -61,7 +61,7 @@ def diff(fun, lst, word, ratio, *prefix):
     return result
 
 def main():
-    parser = arg_parser()
+    parser = arg_parser(cfg)
     arg = parser.parse_args()
     default_rating = arg.rating
     default_prefix = arg.prefix
@@ -84,6 +84,7 @@ def main():
                 default_rating = repl[1]
             except IndexError:
                 pass
+
 
             ratio = float(default_rating)/100
             res = diff(diff_functions['jaro_winkler'],

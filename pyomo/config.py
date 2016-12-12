@@ -16,3 +16,7 @@ class Config:
             names=True,
             other=True
         )
+        # int min 0 max 99
+        self.rating = 87
+        # float min 0.1; max 1.0
+        self.prefix = 0.1
