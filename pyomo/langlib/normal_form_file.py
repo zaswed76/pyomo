@@ -43,7 +43,6 @@ class Dictionaries:
             else:
                 if d_name and self.cfg.init_dictionaries.get(name,
                                                              False):
-                    print(name)
                     dictionaries[name] = file_to_words(
                         paths.dict_work(d_name))
         return dictionaries

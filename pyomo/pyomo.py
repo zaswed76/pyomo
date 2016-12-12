@@ -33,11 +33,7 @@ def arg_parser(cfg):
                         length sufficient to consider the strings *identical*.
                         If no prefix weight is specified, 1/10 is used.''')
 
-    parser.add_argument('-m', dest='max', default=150, type=int,
-                        help='''
-                        максимальное число найденных слов - целое число
-                         от 0 до 2000 (0 и 2000 - условные величины)
-                        ''')
+
     return parser
 
 diff_functions = dict(
@@ -60,9 +56,7 @@ def main():
     arg = parser.parse_args()
     default_rating = arg.rating
     default_prefix = arg.prefix
-    default_max = arg.max
     dictionaries = omolib.Dictionaries(cfg)
-    repl = ''
     while True:
         repl = input('введите слово >>> \n').split(' ')
         # выход
