@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import argparse
 from pyomo import paths
 from pyomo import config
 from pyomo.langlib import distanse
@@ -10,7 +11,14 @@ from pyomo.langlib import dict_lib
 
 cfg = config.Config()
 
+def arg_parser():
+    parser = argparse.ArgumentParser(
+            description=''' поиск слов подобных по звучанию
+            ''')
+    parser.add_argument('цщкв',
+                        help='путь к миниаюре', type=str)
 
+    return parser
 
 
 
