@@ -4,6 +4,7 @@
 import sys
 import argparse
 
+import math
 from tabulate import tabulate
 
 from pyomo import config
@@ -14,10 +15,16 @@ cfg = config.Config()
 def sorter():
     pass
 
-def printer(iterable, size):
+def printer(iterable, columns, tablefmt='plain'):
+    """
+    Various plain-text table formats (`tablefmt`) are supported:
+    'plain', 'simple', 'grid', 'pipe', 'orgtbl', 'rst', 'mediawiki',
+    'latex', 'latex_booktabs'.
+     """
+    size = int(math.ceil(len(iterable) / columns))
     iterable = [iterable[i:i+size] for i in range(0, len(iterable), size)]
     dict_iter = {_: i for _, i in enumerate(iterable)}
-    print(tabulate(dict_iter))
+    print(tabulate(dict_iter, tablefmt=tablefmt))
 
 
 def arg_parser(cfg):
@@ -29,13 +36,14 @@ def arg_parser(cfg):
                         рейтинг - целое число от 0 до 100
                         чем ниже рейтинг тем больше найденых слов''')
 
-    parser.add_argument('-l', dest='limit_column', default=cfg.word_limit_column,
+    parser.add_argument('-l', dest='limit_columns', default=cfg.limit_columns,
                         type=int,
-                        help=''' колличество слов в колонке (положительное целое число) ''')
+                        help=''' колличество колонок (положительное целое число)
+                        Колонок может быть меньше, но не может быть больше''')
 
     parser.add_argument('-s', dest='sort_key', default=cfg.sort_key,
                         type=int,
-                        help=''' сортировать по  < n > первых букю''')
+                        help=''' сортировать по  < n > первых букв''')
 
     parser.add_argument('-p', dest='prefix', default=cfg.prefix, type=float,
                         help='''
@@ -73,7 +81,7 @@ def main():
     arg = parser.parse_args()
     default_rating = arg.rating
     default_prefix = arg.prefix
-    default_limit_column = arg.limit_column
+    limit_columns = arg.limit_columns
     sort_key = arg.sort_key
     dictionaries = omolib.Dictionaries(cfg)
     while True:
@@ -101,7 +109,7 @@ def main():
                        default_prefix)
             print(default_rating)
             res2 = omolib.Accumulator.sorted(res, word, sort_key)
-            printer(res2, default_limit_column)
+            printer(res2, limit_columns)
 
 
 if __name__ == '__main__':

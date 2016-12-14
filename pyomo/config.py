@@ -24,7 +24,7 @@ class Config:
         self.prefix = 0.1
 
         ''' колличество слов в столбце'''
-        self.word_limit_column = 40
+        self.limit_columns = 3
 
 
         '''
@@ -36,3 +36,11 @@ class Config:
         список повторов не содержит
         '''
         self.sort_key = 3
+
+        """
+        Various plain-text table formats (`tablefmt`) are supported:
+        'plain', 'simple', 'grid', 'pipe', 'orgtbl', 'rst', 'mediawiki',
+        'latex', 'latex_booktabs'.
+        """
+
+        self.tablefmt = 'plain'
