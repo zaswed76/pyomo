@@ -13,7 +13,7 @@ pyomo
   pip install --upgrade --user git+https://github.com/zaswed76/pyomo.git
 
 
-можно использовать pip3
+.. note:: можно использовать pip3
 
 Описание конфига:
 ------------------
