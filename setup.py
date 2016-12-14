@@ -16,7 +16,7 @@ setup(
         install_requires=[],
         entry_points={
             'console_scripts':
-                ['pyomo = pyomo.pyomo:main']
+                ['pyomo = pyomo.omoword:main']
         }
 
 )

@@ -65,9 +65,21 @@ class Accumulator(list):
     def __init__(self):
         super().__init__()
 
-    def append(self, p_object):
+    def uniq_append(self, p_object):
         if not p_object in self:
             super().append(p_object)
+
+    def uniq_extend(self, iterable):
+        super().extend([x for x in iterable if x not in self])
+
+    @staticmethod
+    def sorted(iterable, original, cletter):
+        ac = Accumulator()
+        s = reversed(range(1, cletter+1))
+        for n in s:
+            ac.uniq_extend([x for x in iterable if x.startswith(original[0:n])])
+        ac.uniq_extend(iterable)
+        return ac
 
 
 def file_to_words(file):

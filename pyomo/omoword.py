@@ -3,13 +3,21 @@
 
 import sys
 import argparse
+
+from tabulate import tabulate
+
 from pyomo import config
 from pyomo.langlib import normal_form_file as omolib
 import Levenshtein as lv
 cfg = config.Config()
 
-def printer(iterable ,*args):
+def sorter():
     pass
+
+def printer(iterable, size):
+    iterable = [iterable[i:i+size] for i in range(0, len(iterable), size)]
+    dict_iter = {_: i for _, i in enumerate(iterable)}
+    print(tabulate(dict_iter))
 
 
 def arg_parser(cfg):
@@ -20,6 +28,15 @@ def arg_parser(cfg):
                         help='''
                         рейтинг - целое число от 0 до 100
                         чем ниже рейтинг тем больше найденых слов''')
+
+    parser.add_argument('-l', dest='limit_column', default=cfg.word_limit_column,
+                        type=int,
+                        help=''' колличество слов в колонке (положительное целое число) ''')
+
+    parser.add_argument('-s', dest='sort_key', default=cfg.sort_key,
+                        type=int,
+                        help=''' сортировать по  < n > первых букю''')
+
     parser.add_argument('-p', dest='prefix', default=cfg.prefix, type=float,
                         help='''
                         Compute Jaro string similarity metric of two strings.
@@ -56,6 +73,8 @@ def main():
     arg = parser.parse_args()
     default_rating = arg.rating
     default_prefix = arg.prefix
+    default_limit_column = arg.limit_column
+    sort_key = arg.sort_key
     dictionaries = omolib.Dictionaries(cfg)
     while True:
         repl = input('введите слово >>> \n').split(' ')
@@ -81,7 +100,8 @@ def main():
                        ratio,
                        default_prefix)
             print(default_rating)
-            print(res)
+            res2 = omolib.Accumulator.sorted(res, word, sort_key)
+            printer(res2, default_limit_column)
 
 
 if __name__ == '__main__':
