@@ -79,12 +79,12 @@ def diff(fun, lst, word, ratio, *prefix):
 def main():
     parser = arg_parser(cfg)
     arg = parser.parse_args()
-    default_rating = arg.rating
     default_prefix = arg.prefix
     limit_columns = arg.limit_columns
     sort_key = arg.sort_key
     dictionaries = omolib.Dictionaries(cfg)
     while True:
+        default_rating = arg.rating
         repl = input('введите слово >>> \n').split(' ')
         # выход
         if repl[0] in ['Q', 'q', 'й', 'Й', 'exit']:
