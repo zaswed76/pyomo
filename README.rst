@@ -13,6 +13,21 @@ pyomo
 
   pip install --upgrade --user git+https://github.com/zaswed76/pyomo.git
 
+.. note:: при ошибке импорта при запуске -
+
+ (ModuleNotFoundError: No module named 'Levenshtein')
+
+делаем следующее:
+
+* идём сюда http://www.lfd.uci.edu/~gohlke/pythonlibs/
+
+* ищем пакет Python-Levenshtein
+
+* качаем нужную версию
+
+* в терминале pip3 install path_to_whl
+
+не факт что у вас установлен python X 64
 
 .. note:: можно использовать pip3
 
