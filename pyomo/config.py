@@ -44,3 +44,5 @@ class Config:
         """
 
         self.tablefmt = 'plain'
+
+        self.separator = "\n------------------------------------------"

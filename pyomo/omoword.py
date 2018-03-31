@@ -72,7 +72,6 @@ diff_functions = dict(
 )
 
 def diff(fun, lst, word, ratio, *prefix):
-    print(lst)
     result = omolib.Accumulator()
     for line in lst:
         r = fun(line, word, *prefix)
@@ -87,6 +86,7 @@ def main():
     limit_columns = arg.limit_columns
     sort_key = arg.sort_key
     dictionaries = omolib.Dictionaries(cfg)
+
     while True:
         default_rating = arg.rating
         repl = input('введите слово >>> \n').split(' ')
@@ -115,6 +115,7 @@ def main():
             # res2 = omolib.Accumulator.sorted(res, word, sort_key)
             res3 = omolib.Accumulator.sorted_on_ratio(res)
             printer(res3, limit_columns)
+            print(cfg.separator)
 
 
 if __name__ == '__main__':
