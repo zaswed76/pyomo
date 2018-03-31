@@ -77,10 +77,14 @@ class Accumulator(list):
         ac = Accumulator()
         s = reversed(range(1, cletter+1))
         for n in s:
-            ac.uniq_extend([x for x in iterable if x.startswith(original[0:n])])
-        ac.uniq_extend(iterable)
+            ac.uniq_extend([x[0] for x in iterable if x[0].startswith(original[0:n])])
+        ac.uniq_extend([x[0] for x in iterable])
         return ac
 
+    @staticmethod
+    def sorted_on_ratio(iterable, reverse=True):
+        r = sorted(iterable, key=lambda w: w[1], reverse=reverse)
+        return [x[0] for x in r]
 
 def file_to_words(file):
     """

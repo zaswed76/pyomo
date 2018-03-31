@@ -72,11 +72,12 @@ diff_functions = dict(
 )
 
 def diff(fun, lst, word, ratio, *prefix):
+    print(lst)
     result = omolib.Accumulator()
     for line in lst:
         r = fun(line, word, *prefix)
         if r > ratio:
-            result.append(line)
+            result.append((line, r))
     return result
 
 def main():
@@ -111,8 +112,9 @@ def main():
                        ratio,
                        default_prefix)
             print(default_rating)
-            res2 = omolib.Accumulator.sorted(res, word, sort_key)
-            printer(res2, limit_columns)
+            # res2 = omolib.Accumulator.sorted(res, word, sort_key)
+            res3 = omolib.Accumulator.sorted_on_ratio(res)
+            printer(res3, limit_columns)
 
 
 if __name__ == '__main__':
